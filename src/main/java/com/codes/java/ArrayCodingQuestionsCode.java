@@ -396,23 +396,22 @@ public class ArrayCodingQuestionsCode {
 // Time Complexity : O(n)
 // Space Complexity: O(1)
 // ============================================================================
-    public static void moveZerosToEnd(int[] arr) {
+    public static void moveZerosToEnd(int[] nums) {
 
-        if (arr == null || arr.length <= 1)
+        if (nums == null || nums.length <= 1)
             return;
 
-        int insertPos = 0;
+        int nonZeroPos = 0;
 
-        for (int num : arr) {
+        for (int i = 0; i < nums.length; i++) {
+            // If current element is non-zero, swap it with the nonZeroPos element
+            if (nums[i] != 0) {
+                int temp = nums[i];
+                nums[i] = nums[nonZeroPos];
+                nums[nonZeroPos] = temp;
 
-            if (num != 0) {
-                arr[insertPos++] = num;
+                nonZeroPos++;
             }
-        }
-
-        while (insertPos < arr.length) {
-
-            arr[insertPos++] = 0;
         }
     }
 
@@ -524,7 +523,9 @@ public class ArrayCodingQuestionsCode {
 // Time Complexity : O(n)
 // Space Complexity: O(n)
 // ============================================================================
-    public static int[] twoSum(int[] nums, int target) {
+    public static List<int[]> allPairs(int[] nums, int target) {
+
+        List<int[]> result = new ArrayList<>();
 
         for (int i = 0; i < nums.length; i++) {
 
@@ -532,12 +533,12 @@ public class ArrayCodingQuestionsCode {
 
                 if (nums[i] + nums[j] == target) {
 
-                    return new int[]{i, j};
+                    result.add(new int[]{i, j});
                 }
             }
         }
 
-        return new int[]{-1, -1};
+        return result;
     }
 
     // ============================================================================
@@ -596,6 +597,47 @@ public class ArrayCodingQuestionsCode {
         }
 
         return maxSum;
+    }
+
+    public class SubsetSum {
+
+        public static void findCombinations(int[] nums, int target) {
+            backtrack(nums, target, 0, new ArrayList<>());
+        }
+
+        private static void backtrack(int[] nums,
+                                      int target,
+                                      int start,
+                                      List<Integer> current) {
+
+            if (target == 0) {
+                System.out.println(current);
+                return;
+            }
+
+            if (target < 0) {
+                return;
+            }
+
+            for (int i = start; i < nums.length; i++) {
+
+                current.add(nums[i]);
+
+                backtrack(nums,
+                        target - nums[i],
+                        i + 1,
+                        current);
+
+                current.remove(current.size() - 1);
+            }
+        }
+
+        public static void main(String[] args) {
+
+            int[] nums = {2, 7, 3, 6, 4, 5};
+
+            findCombinations(nums, 9);
+        }
     }
 
     // ============================================================================
@@ -767,19 +809,31 @@ public class ArrayCodingQuestionsCode {
         if (prices == null || prices.length <= 1)
             return 0;
 
-        int minPrice = Integer.MAX_VALUE;
+        int minPrice = prices[0];
+        int buyDay = 0;
+
+        int sellDay = 0;
         int maxProfit = 0;
 
-        for (int price : prices) {
+        for (int i = 1; i < prices.length; i++) {
 
-            minPrice = Math.min(minPrice,
-                    price);
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+                buyDay = i;
+            }
 
-            maxProfit = Math.max(
-                    maxProfit,
-                    price - minPrice
-            );
+            if (prices[i] - minPrice > maxProfit) {
+
+                maxProfit = prices[i] - minPrice;
+
+                sellDay = i;
+            }
         }
+
+        System.out.println("Buy Day  : " + buyDay);
+        System.out.println("Sell Day : " + sellDay);
+        System.out.println("Buy Price: " + prices[buyDay]);
+        System.out.println("Sell Price: " + prices[sellDay]);
 
         return maxProfit;
     }
@@ -953,7 +1007,7 @@ public class ArrayCodingQuestionsCode {
 
     System.out.println("21. Two Sum : "
             + Arrays.toString(
-            twoSum(
+            allPairs(
                     new int[]{2,7,11,15},
                     9)));
 
