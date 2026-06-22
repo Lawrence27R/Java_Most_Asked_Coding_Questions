@@ -1,5 +1,7 @@
 package com.codes.java;
 
+import com.codes.java.codingquestions.arrays.MajorityElement;
+
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -195,6 +197,24 @@ public class ArrayCodingQuestionsCode {
             }
         }
 
+//        long even = Arrays.stream(arr)
+//                .filter(num -> num % 2 == 0)
+//                .count();
+//
+//        long odd = Arrays.stream(arr)
+//                .filter(num -> num % 2 != 0)
+//                .count();
+
+//        Map<Boolean, Long> counts = Arrays.stream(arr)
+//                .boxed()
+//                .collect(Collectors.partitioningBy(
+//                        x -> x % 2 == 0,
+//                        Collectors.counting()
+//                ));
+//
+//        long even = counts.get(true);
+//        long odd = counts.get(false);
+
         System.out.println("    Even Count : " + even);
         System.out.println("    Odd Count  : " + odd);
     }
@@ -215,8 +235,10 @@ public class ArrayCodingQuestionsCode {
         int min = arr[0];
 
         for (int num : arr) {
-            if (num > max) max = num;
-            if (num < min) min = num;
+            if (num > max)
+                max = num;
+            if (num < min)
+                min = num;
         }
 
         return new int[]{max, min};
@@ -231,10 +253,12 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static boolean searchElement(int[] arr, int target) {
 
-        if (arr == null) return false;
+        if (arr == null)
+            return false;
 
         for (int num : arr) {
-            if (num == target) return true;
+            if (num == target)
+                return true;
         }
 
         return false;
@@ -294,6 +318,32 @@ public class ArrayCodingQuestionsCode {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
+        // First non-repeating element
+//        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+//            if (entry.getValue() == 1) {
+//                System.out.println("First Non-Repeating Element: " + entry.getKey());
+//                break;
+//            }
+//        }
+
+//        Max Count and Element
+//        int maxCount = 0;
+//        int maxElement = 0;
+//
+//        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+//            if (entry.getValue() > maxCount) {
+//                maxCount = entry.getValue();
+//                maxElement = entry.getKey();
+//            }
+//        }
+
+//        MajorityElement in an Array n/2
+//        if (maxCount > arr.length / 2) {
+//            System.out.println("Majority Element: " + maxElement);
+//        } else {
+//            System.out.println("No Majority Element");
+//        }
+
         return map;
     }
 
@@ -308,14 +358,24 @@ public class ArrayCodingQuestionsCode {
 
         List<Integer> result = new ArrayList<>();
 
-        if (arr == null || arr.length == 0) return result;
+        if (arr == null || arr.length == 0) {
+            return result;
+        }
 
-        int[] copy = Arrays.copyOf(arr, arr.length);
-        Arrays.sort(copy);
+        Set<Integer> set = new HashSet<>();
 
-        for (int i = 0; i < copy.length - 1; i++) {
-            for (int num = copy[i] + 1; num < copy[i + 1]; num++) {
-                result.add(num);
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for (int num : arr) {
+            set.add(num);
+            min = Math.min(min, num);
+            max = Math.max(max, num);
+        }
+
+        for (int i = min; i <= max; i++) {
+            if (!set.contains(i)) {
+                result.add(i);
             }
         }
 
@@ -331,7 +391,8 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static void moveZerosToEnd(int[] nums) {
 
-        if (nums == null || nums.length <= 1) return;
+        if (nums == null || nums.length <= 1)
+            return;
 
         int nonZeroPos = 0;
 
@@ -394,9 +455,21 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static int[] mergeArrays(int[] arr1, int[] arr2) {
 
+//        int[] result = new int[arr1.length + arr2.length];
+//
+//        for (int i = 0; i < arr1.length; i++) {
+//            result[i] = arr1[i];
+//        }
+//
+//        for (int i = 0; i < arr2.length; i++) {
+//            result[arr1.length + i] = arr2[i];
+//        }
+//
+//        return result;
+
         return IntStream.concat(
-                Arrays.stream(arr1 == null ? new int[0] : arr1),
-                Arrays.stream(arr2 == null ? new int[0] : arr2)
+                Arrays.stream(arr1),
+                Arrays.stream(arr2)
         ).toArray();
     }
 
@@ -461,7 +534,7 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Pair With Given Sum
+    // Question: Pair With Given Sum  (Not Needed)
     // Input : {1, 2, 3, 4, 5}, target = 7
     // Output: [2, 5] and [3, 4]
     // Time Complexity : O(n)
@@ -504,9 +577,11 @@ public class ArrayCodingQuestionsCode {
         for (int i = 1; i < arr.length; i++) {
 
             if (arr[i] > currentSum + arr[i]) {
+//                Forget Prev array start with new array
                 currentSum = arr[i];
                 tempStart = i;
             } else {
+//                Prev array is imp continue
                 currentSum += arr[i];
             }
 
@@ -518,12 +593,9 @@ public class ArrayCodingQuestionsCode {
         }
         System.out.println("Max Sum = " + maxSum);
 
-        System.out.print("Subarray = [");
         for (int i = start; i <= end; i++) {
-            System.out.print(arr[i]);
-            if (i < end) System.out.print(", ");
+            System.out.print(arr[i] + " ");
         }
-        System.out.println("]");
     }
 
     // ============================================================================
@@ -549,7 +621,8 @@ public class ArrayCodingQuestionsCode {
                 return;
             }
 
-            if (target < 0) return;
+            if (target < 0)
+                return;
 
             for (int i = start; i < nums.length; i++) {
                 current.add(nums[i]);
@@ -560,7 +633,7 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Leaders In Array
+    // Question: Leaders In Array (Not Necessary)
     // Input : {16, 17, 4, 3, 5, 2}
     // Output: [17, 5, 2]
     // (A leader is greater than all elements to its right)
@@ -588,34 +661,6 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Majority Element  (Boyer-Moore Voting Algorithm)
-    // Input : {2, 2, 1, 1, 1, 2, 2}
-    // Output: 2  (appears more than n/2 times)
-    // Time Complexity : O(n)
-    // Space Complexity: O(1)
-    // ============================================================================
-    public static Integer majorityElement(int[] nums) {
-
-        if (nums == null || nums.length == 0) return null;
-
-        int candidate = 0;
-        int count     = 0;
-
-        for (int num : nums) {
-            if (count == 0) candidate = num;
-            count += (num == candidate) ? 1 : -1;
-        }
-
-        // Verify candidate
-        count = 0;
-        for (int num : nums) {
-            if (num == candidate) count++;
-        }
-
-        return count > nums.length / 2 ? candidate : null;
-    }
-
-    // ============================================================================
     // Question: Sort 0s 1s 2s  (Dutch National Flag Algorithm)
     // Input : {2, 0, 2, 1, 1, 0}
     // Output: {0, 0, 1, 1, 2, 2}
@@ -624,40 +669,44 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static void sortZeroOneTwo(int[] arr) {
 
-        if (arr == null || arr.length <= 1) return;
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
 
-        int low  = 0;
-        int mid  = 0;
-        int high = arr.length - 1;
+        int zero = 0;
+        int one = 0;
+        int two = 0;
 
-        while (mid <= high) {
-
-            switch (arr[mid]) {
-
-                case 0:
-                    int temp0 = arr[low];
-                    arr[low]  = arr[mid];
-                    arr[mid]  = temp0;
-                    low++;
-                    mid++;
-                    break;
-
-                case 1:
-                    mid++;
-                    break;
-
-                case 2:
-                    int temp2 = arr[mid];
-                    arr[mid]  = arr[high];
-                    arr[high] = temp2;
-                    high--;
-                    break;
-
-                default:
-                    throw new IllegalArgumentException(
-                            "Array should contain only 0, 1, and 2");
+        // Count 0s, 1s, and 2s
+        for (int num : arr) {
+            if (num == 0) {
+                zero++;
+            } else if (num == 1) {
+                one++;
+            } else if (num == 2) {
+                two++;
+            } else {
+                throw new IllegalArgumentException(
+                        "Array should contain only 0, 1, and 2");
             }
         }
+
+        // Fill the array back
+        int index = 0;
+
+        for (int i = 0; i < zero; i++) {
+            arr[index++] = 0;
+        }
+
+        for (int i = 0; i < one; i++) {
+            arr[index++] = 1;
+        }
+
+        for (int i = 0; i < two; i++) {
+            arr[index++] = 2;
+        }
+
+        System.out.println(Arrays.toString(arr));
     }
 
     // ============================================================================
@@ -670,17 +719,16 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static int[] productExceptSelf(int[] nums) {
 
-        int   n      = nums.length;
-        int[] result = new int[n];
+        int totalProduct = 1;
 
-        for (int i = 0; i < n; i++) {
-            int product = 1;
-            for (int j = 0; j < n; j++) {
-                if (i != j) {
-                    product *= nums[j];
-                }
-            }
-            result[i] = product;
+        for (int num : nums) {
+            totalProduct *= num;
+        }
+
+        int[] result = new int[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            result[i] = totalProduct / nums[i];
         }
 
         return result;
@@ -726,7 +774,7 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: First Non-Repeating Element
+    // Question: First Non-Repeating Element (Already done above)
     // Input : {9, 4, 9, 6, 7, 4}
     // Output: 6
     // Time Complexity : O(n)
@@ -786,6 +834,12 @@ public class ArrayCodingQuestionsCode {
 
         if (arr == null) return null;
 
+//        Integer[] arr = {5, 3, 8, 1, 2};
+//
+//        Arrays.sort(arr, Collections.reverseOrder());
+//
+//        System.out.println(Arrays.toString(arr));
+
         return Arrays.stream(arr)
                 .boxed()
                 .sorted(Collections.reverseOrder())
@@ -817,7 +871,54 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Next Greater Element
+    // Question: Sort Map By Values
+    // Input : {A=3, B=1, C=2, D=1}
+    // Output: {B=1, D=1, C=2, A=3}
+    // ============================================================================
+    public static void sortMapByValues(Map<String, Integer> map) {
+
+        if (map == null) return;
+
+        Map<String, Integer> sortedMap = map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new
+                ));
+
+        System.out.println("    Sorted Map : " + sortedMap);
+    }
+
+    // ============================================================================
+    // Question: Sort Map By Value Then Key
+    // Input : {C=2, A=1, D=2, B=1}
+    // Output: {A=1, B=1, C=2, D=2}
+    // ============================================================================
+    public static void sortMapByValueThenKey(Map<String, Integer> map) {
+
+        if (map == null) return;
+
+        Map<String, Integer> sortedMap = map.entrySet()
+                .stream()
+                .sorted(
+                        Map.Entry.<String, Integer>comparingByValue()
+                                .thenComparing(Map.Entry.comparingByKey())
+                )
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new
+                ));
+
+        System.out.println("    Sorted Map : " + sortedMap);
+    }
+
+    // ============================================================================
+    // Question: Next Greater Element (Not to do)
     // Input : {4, 5, 2, 10, 8}
     // Output: {5, 10, 10, -1, -1}
     // (For each element, find the first greater element to its right; -1 if none)
@@ -901,6 +1002,46 @@ public class ArrayCodingQuestionsCode {
         return nestedList.stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
+    }
+
+    // ============================================================================
+    // Question: Print Even and Odd Numbers Using Two Threads
+    // ============================================================================
+    public static void printEvenOddUsingThreads(int max) {
+
+        Object lock     = new Object();
+        int[]  counter  = {1};
+
+        Thread oddThread = new Thread(() -> {
+            synchronized (lock) {
+                while (counter[0] <= max) {
+                    if (counter[0] % 2 == 0) {
+                        try { lock.wait(); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                    } else {
+                        System.out.println("    Odd  Thread : " + counter[0]);
+                        counter[0]++;
+                        lock.notify();
+                    }
+                }
+            }
+        });
+
+        Thread evenThread = new Thread(() -> {
+            synchronized (lock) {
+                while (counter[0] <= max) {
+                    if (counter[0] % 2 != 0) {
+                        try { lock.wait(); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                    } else {
+                        System.out.println("    Even Thread : " + counter[0]);
+                        counter[0]++;
+                        lock.notify();
+                    }
+                }
+            }
+        });
+
+        oddThread.start();
+        evenThread.start();
     }
 
     // ============================================================================
@@ -1260,46 +1401,6 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Print Even and Odd Numbers Using Two Threads
-    // ============================================================================
-    public static void printEvenOddUsingThreads(int max) {
-
-        Object lock     = new Object();
-        int[]  counter  = {1};
-
-        Thread oddThread = new Thread(() -> {
-            synchronized (lock) {
-                while (counter[0] <= max) {
-                    if (counter[0] % 2 == 0) {
-                        try { lock.wait(); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-                    } else {
-                        System.out.println("    Odd  Thread : " + counter[0]);
-                        counter[0]++;
-                        lock.notify();
-                    }
-                }
-            }
-        });
-
-        Thread evenThread = new Thread(() -> {
-            synchronized (lock) {
-                while (counter[0] <= max) {
-                    if (counter[0] % 2 != 0) {
-                        try { lock.wait(); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-                    } else {
-                        System.out.println("    Even Thread : " + counter[0]);
-                        counter[0]++;
-                        lock.notify();
-                    }
-                }
-            }
-        });
-
-        oddThread.start();
-        evenThread.start();
-    }
-
-    // ============================================================================
     // Question: Producer-Consumer Problem (Using BlockingQueue)
     // ============================================================================
     public static void producerConsumerProblem() {
@@ -1488,11 +1589,6 @@ public class ArrayCodingQuestionsCode {
         System.out.println("    Output : " + findLeaders(
                 new int[]{16, 17, 4, 3, 5, 2}));
 
-        // ------------------------------------------------------------------
-        System.out.println("\n25. Majority Element");
-        System.out.println("    Input  : [2, 2, 1, 1, 1, 2, 2]");
-        System.out.println("    Output : " + majorityElement(
-                new int[]{2, 2, 1, 1, 1, 2, 2}));
 
         // ------------------------------------------------------------------
         int[] dnf = {2, 0, 2, 1, 1, 0};

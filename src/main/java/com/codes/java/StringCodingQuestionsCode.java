@@ -59,7 +59,8 @@ public class StringCodingQuestionsCode {
     // ============================================================================
     public static boolean isPalindrome(String str) {
 
-        if (str == null) return false;
+        if (str == null)
+            return false;
 
         int left  = 0;
         int right = str.length() - 1;
@@ -211,7 +212,8 @@ public class StringCodingQuestionsCode {
         Map<Character, Integer> map = countCharacterFrequency(str);
 
         for (char ch : str.toCharArray()) {
-            if (map.get(ch) == 1) return ch;
+            if (map.get(ch) == 1)
+                return ch;
         }
 
         return null;
@@ -233,7 +235,8 @@ public class StringCodingQuestionsCode {
         Set<Character> set = new HashSet<>();
 
         for (char ch : str.toCharArray()) {
-            if (!set.add(ch)) return ch;
+            if (!set.add(ch))
+                return ch;
         }
 
         return null;
@@ -304,19 +307,13 @@ public class StringCodingQuestionsCode {
     // ============================================================================
     public static String reverseWords(String sentence) {
 
-        if (sentence == null || sentence.trim().isEmpty()){
-            return sentence;
-        }
+        String[] words = sentence.split(" ");
 
-        String[]      words = sentence.trim().split("\\s+");
-        StringBuilder sb    = new StringBuilder();
+        List<String> list = Arrays.asList(words);
 
-        for (int i = words.length - 1; i >= 0; i--) {
-            sb.append(words[i]);
-            if (i > 0) sb.append(" ");
-        }
+        Collections.reverse(list);
 
-        return sb.toString();
+        return String.join(" ", list);
     }
 
     // ============================================================================
@@ -328,22 +325,18 @@ public class StringCodingQuestionsCode {
     // ============================================================================
     public static String reverseEachWord(String sentence) {
 
-        if (sentence == null || sentence.isEmpty()){
-            return sentence;
-        }
+        String[] words = sentence.split(" ");
 
-        String[]      words  = sentence.split(" ");
+        List<String> list = Arrays.asList(words);
+
         StringBuilder result = new StringBuilder();
 
-        for (String word : words) {
-            result.append(reverseString(word)).append(" ");
+        for (String word : list) {
+            result.append(reverseString(word))
+                    .append(" ");
         }
 
-        if (result.length() > 0) {
-            result.deleteCharAt(result.length() - 1);
-        }
-
-        return result.toString();
+        return result.toString().trim();
     }
 
     // ============================================================================
@@ -446,7 +439,7 @@ public class StringCodingQuestionsCode {
 
         if (str == null) return null;
 
-        return str.replaceAll("\\s+", "");
+        return str.replace(" ", "");
     }
 
     // ============================================================================
@@ -505,7 +498,7 @@ public class StringCodingQuestionsCode {
 
         if (str == null || str.isEmpty()) return str;
 
-        return str.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+        return str.replace(" ", "_");
     }
 
     // ============================================================================
@@ -546,12 +539,16 @@ public class StringCodingQuestionsCode {
     // ============================================================================
     public static boolean areStringsEqual(String s1, String s2) {
 
-        if (s1 == null && s2 == null) return true;
-        if (s1 == null || s2 == null) return false;
-        if (s1.length() != s2.length()) return false;
+        if (s1 == null && s2 == null)
+            return true;
+        if (s1 == null || s2 == null)
+            return false;
+        if (s1.length() != s2.length())
+            return false;
 
         for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) != s2.charAt(i)) return false;
+            if (s1.charAt(i) != s2.charAt(i))
+                return false;
         }
 
         return true;
@@ -669,7 +666,8 @@ public class StringCodingQuestionsCode {
 
             } else if (ch == ')' || ch == '}' || ch == ']') {
 
-                if (stack.isEmpty()) return false;
+                if (stack.isEmpty())
+                    return false;
 
                 char top = stack.pop();
 
