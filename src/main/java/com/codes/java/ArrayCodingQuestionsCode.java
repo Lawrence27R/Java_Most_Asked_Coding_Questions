@@ -287,13 +287,13 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static Set<Integer> findDuplicates(int[] arr) {
 
-        Set<Integer> seen       = new HashSet<>();
+        Set<Integer> set       = new HashSet<>();
         Set<Integer> duplicates = new LinkedHashSet<>();
 
         if (arr == null) return duplicates;
 
         for (int num : arr) {
-            if (!seen.add(num)) {
+            if (!set.add(num)) {
                 duplicates.add(num);
             }
         }
@@ -404,46 +404,6 @@ public class ArrayCodingQuestionsCode {
                 nonZeroPos++;
             }
         }
-    }
-
-    // ============================================================================
-    // Question: Rotate Array Left By One Position
-    // Input : {1, 2, 3, 4, 5}
-    // Output: {2, 3, 4, 5, 1}
-    // Time Complexity : O(n)
-    // Space Complexity: O(1)
-    // ============================================================================
-    public static void rotateLeft(int[] arr) {
-
-        if (arr == null || arr.length <= 1) return;
-
-        int first = arr[0];
-
-        for (int i = 0; i < arr.length - 1; i++) {
-            arr[i] = arr[i + 1];
-        }
-
-        arr[arr.length - 1] = first;
-    }
-
-    // ============================================================================
-    // Question: Rotate Array Right By One Position
-    // Input : {1, 2, 3, 4, 5}
-    // Output: {5, 1, 2, 3, 4}
-    // Time Complexity : O(n)
-    // Space Complexity: O(1)
-    // ============================================================================
-    public static void rotateRight(int[] arr) {
-
-        if (arr == null || arr.length <= 1) return;
-
-        int last = arr[arr.length - 1];
-
-        for (int i = arr.length - 1; i > 0; i--) {
-            arr[i] = arr[i - 1];
-        }
-
-        arr[0] = last;
     }
 
     // ============================================================================
@@ -961,6 +921,24 @@ public class ArrayCodingQuestionsCode {
         reverseSubArray(nums, k, nums.length - 1);
     }
 
+    // ============================================================================
+    // Question: Rotate Array By K Positions (Left Rotation)
+    // Input : {1, 2, 3, 4, 5, 6, 7}, k = 3
+    // Output: {4, 5, 6, 7, 1, 2, 3}
+    // Time Complexity : O(n)
+    // Space Complexity: O(1)
+    // ============================================================================
+    public static void rotateArrayLeftByK(int[] nums, int k) {
+
+        if (nums == null || nums.length == 0 || k < 0) return;
+
+        k = k % nums.length;
+
+        reverseSubArray(nums, 0, k - 1);
+        reverseSubArray(nums, k, nums.length - 1);
+        reverseSubArray(nums, 0, nums.length - 1);
+    }
+
     private static void reverseSubArray(int[] nums, int start, int end) {
         while (start < end) {
             int temp    = nums[start];
@@ -988,6 +966,31 @@ public class ArrayCodingQuestionsCode {
         }
 
         return expectedSum - actualSum;
+    }
+
+    // ============================================================================
+    // Question: Find Maximum Consecutive Occurrence of 1
+    // Input : "110111101"
+    // Output: 4
+    // Time Complexity : O(n)
+    // Space Complexity: O(1)
+    // ============================================================================
+    public static int findMaxConsecutiveOnes(String str) {
+
+        int maxCount = 0;
+        int currentCount = 0;
+
+        for (char ch : str.toCharArray()) {
+
+            if (ch == '1') {
+                currentCount++;
+                maxCount = Math.max(maxCount, currentCount);
+            } else {
+                currentCount = 0;
+            }
+        }
+
+        return maxCount;
     }
 
     // ============================================================================
@@ -1291,96 +1294,6 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Linked List Node (used for Linked List questions)
-    // ============================================================================
-    public static class ListNode {
-
-        int      val;
-        ListNode next;
-
-        ListNode(int x) { val = x; }
-
-        @Override
-        public String toString() {
-            return val + (next != null ? " -> " + next.toString() : "");
-        }
-    }
-
-    // ============================================================================
-    // Question: Reverse Linked List
-    // Input : 1 -> 2 -> 3 -> 4 -> 5
-    // Output: 5 -> 4 -> 3 -> 2 -> 1
-    // Time Complexity : O(n)
-    // Space Complexity: O(1)
-    // ============================================================================
-    public static ListNode reverseLinkedList(ListNode head) {
-
-        ListNode prev = null;
-        ListNode curr = head;
-
-        while (curr != null) {
-            ListNode nextTemp = curr.next;
-            curr.next = prev;
-            prev      = curr;
-            curr      = nextTemp;
-        }
-
-        return prev;
-    }
-
-    // ============================================================================
-    // Question: Remove Nth Node From End Of Linked List
-    // Input : 1 -> 2 -> 3 -> 4 -> 5, n = 2
-    // Output: 1 -> 2 -> 3 -> 5
-    // Time Complexity : O(n)
-    // Space Complexity: O(1)
-    // ============================================================================
-    public static ListNode removeNthFromEnd(ListNode head, int n) {
-
-        ListNode dummy  = new ListNode(0);
-        dummy.next      = head;
-        ListNode first  = dummy;
-        ListNode second = dummy;
-
-        for (int i = 1; i <= n + 1; i++) {
-            first = first.next;
-        }
-
-        while (first != null) {
-            first  = first.next;
-            second = second.next;
-        }
-
-        if (second.next != null) {
-            second.next = second.next.next;
-        }
-
-        return dummy.next;
-    }
-
-    // ============================================================================
-    // Question: Find Middle Node Of Linked List
-    // Input : 1 -> 2 -> 3 -> 4 -> 5
-    // Output: 3
-    // Time Complexity : O(n)  (Slow-Fast pointer)
-    // Space Complexity: O(1)
-    // ============================================================================
-    public static ListNode findMiddleNode(ListNode head) {
-
-        if (head == null) return null;
-
-        ListNode slow = head;
-        ListNode fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        return slow;
-    }
-
-    // ============================================================================
     // Question: LRU Cache  (Least Recently Used Cache)
     // Uses LinkedHashMap with access-order = true
     // Automatically evicts the least recently used entry when capacity is exceeded
@@ -1398,37 +1311,6 @@ public class ArrayCodingQuestionsCode {
         protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
             return size() > capacity;
         }
-    }
-
-    // ============================================================================
-    // Question: Producer-Consumer Problem (Using BlockingQueue)
-    // ============================================================================
-    public static void producerConsumerProblem() {
-
-        BlockingQueue<Integer> queue = new LinkedBlockingQueue<>(5);
-
-        Thread producer = new Thread(() -> {
-            try {
-                for (int i = 1; i <= 5; i++) {
-                    System.out.println("    Produced : " + i);
-                    queue.put(i);
-                    Thread.sleep(100);
-                }
-            } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        });
-
-        Thread consumer = new Thread(() -> {
-            try {
-                for (int i = 1; i <= 5; i++) {
-                    int val = queue.take();
-                    System.out.println("    Consumed : " + val);
-                    Thread.sleep(200);
-                }
-            } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        });
-
-        producer.start();
-        consumer.start();
     }
 
     // ============================================================================
@@ -1526,20 +1408,6 @@ public class ArrayCodingQuestionsCode {
         System.out.println("\n15. Move Zeros To End");
         System.out.println("    Input  : [0, 1, 0, 3, 12]");
         System.out.println("    Output : " + Arrays.toString(zeros));
-
-        // ------------------------------------------------------------------
-        int[] leftRotate = {1, 2, 3, 4, 5};
-        rotateLeft(leftRotate);
-        System.out.println("\n16. Rotate Array Left By One Position");
-        System.out.println("    Input  : [1, 2, 3, 4, 5]");
-        System.out.println("    Output : " + Arrays.toString(leftRotate));
-
-        // ------------------------------------------------------------------
-        int[] rightRotate = {1, 2, 3, 4, 5};
-        rotateRight(rightRotate);
-        System.out.println("\n17. Rotate Array Right By One Position");
-        System.out.println("    Input  : [1, 2, 3, 4, 5]");
-        System.out.println("    Output : " + Arrays.toString(rightRotate));
 
         // ------------------------------------------------------------------
         System.out.println("\n18. Merge Two Arrays");
@@ -1663,7 +1531,6 @@ public class ArrayCodingQuestionsCode {
         System.out.println("\n37. Flatten Nested List");
         System.out.println("    Input  : [[1, 2], [3, 4, 5]]");
         System.out.println("    Output : " + flattenList(nested));
-
         // ------------------------------------------------------------------
         List<Employee> emps = Arrays.asList(
                 new Employee("Alice",   "IT",      70000),
@@ -1711,30 +1578,6 @@ public class ArrayCodingQuestionsCode {
 
         System.out.println("\n50. Nth Highest Salary (n=2)");
         System.out.println("    Output : " + nthHighestSalary(emps, 2).orElse(null));
-
-        // ------------------------------------------------------------------
-        // Linked List examples
-        ListNode head = new ListNode(1);
-        head.next           = new ListNode(2);
-        head.next.next      = new ListNode(3);
-        head.next.next.next = new ListNode(4);
-        head.next.next.next.next = new ListNode(5);
-
-        System.out.println("\n51. Reverse Linked List");
-        System.out.println("    Input  : " + head);
-        ListNode reversed = reverseLinkedList(head);
-        System.out.println("    Output : " + reversed);
-
-        // Rebuild list for next demo
-        ListNode head2 = new ListNode(1);
-        head2.next           = new ListNode(2);
-        head2.next.next      = new ListNode(3);
-        head2.next.next.next = new ListNode(4);
-        head2.next.next.next.next = new ListNode(5);
-
-        System.out.println("\n52. Find Middle Node Of Linked List");
-        System.out.println("    Input  : " + head2);
-        System.out.println("    Output : " + findMiddleNode(head2).val);
 
         System.out.println("\n53. Subset Sum Combinations");
         System.out.println("    Input  : nums = [2, 7, 3, 6, 4, 5], target = 9");
