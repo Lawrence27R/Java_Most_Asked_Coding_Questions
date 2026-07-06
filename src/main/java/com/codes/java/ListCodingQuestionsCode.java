@@ -1,7 +1,6 @@
-package com.codes.java.codingquestions;
+package com.codes.java;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ListCodingQuestionsCode {
 
