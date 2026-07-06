@@ -9,7 +9,6 @@ public class ListCodingQuestionsCode {
 
     List<Integer> list1 = List.of(10, 20, 30);
 
-
 //    List starts with 1
 //    list.size()        // length
 
