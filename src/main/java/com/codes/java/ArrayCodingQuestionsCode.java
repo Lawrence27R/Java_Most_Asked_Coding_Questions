@@ -290,7 +290,8 @@ public class ArrayCodingQuestionsCode {
         Set<Integer> set       = new HashSet<>();
         Set<Integer> duplicates = new LinkedHashSet<>();
 
-        if (arr == null) return duplicates;
+        if (arr == null)
+            return duplicates;
 
         for (int num : arr) {
             if (!set.add(num)) {
@@ -312,7 +313,8 @@ public class ArrayCodingQuestionsCode {
 
         Map<Integer, Integer> map = new LinkedHashMap<>();
 
-        if (arr == null) return map;
+        if (arr == null)
+            return map;
 
         for (int num : arr) {
             map.put(num, map.getOrDefault(num, 0) + 1);
@@ -913,7 +915,8 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static void rotateArrayByK(int[] nums, int k) {
 
-        if (nums == null || nums.length == 0 || k < 0) return;
+        if (nums == null || nums.length == 0 || k < 0)
+            return;
 
         k = k % nums.length;
         reverseSubArray(nums, 0, nums.length - 1);
@@ -930,7 +933,8 @@ public class ArrayCodingQuestionsCode {
     // ============================================================================
     public static void rotateArrayLeftByK(int[] nums, int k) {
 
-        if (nums == null || nums.length == 0 || k < 0) return;
+        if (nums == null || nums.length == 0 || k < 0)
+            return;
 
         k = k % nums.length;
 
@@ -1006,6 +1010,64 @@ public class ArrayCodingQuestionsCode {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
+
+    // ============================================================================
+    // Question: Factorial
+    // Input : 5
+    // Output: 120
+    // ============================================================================
+    public static long factorial(int n) {
+
+        if (n < 0)
+            throw new IllegalArgumentException("Negative numbers not allowed");
+
+        long result = 1;
+
+        for (int i = 1; i <= n; i++) {
+            result *= i;
+        }
+
+        return result;
+    }
+
+    // ============================================================================
+    // Question: Prime Number
+    // Input : 29
+    // Output: true
+    // ============================================================================
+    public static boolean isPrime(int n) {
+
+        if (n <= 1)
+            return false;
+
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    // ============================================================================
+    // Question: Print Fibonacci Series
+    // Input : 10
+    // Output: 0 1 1 2 3 5 8 13 21 34
+    // ============================================================================
+    public static void printFibonacciSeries(int n) {
+
+        int first = 0;
+        int second = 1;
+
+        for (int i = 0; i < n; i++) {
+
+            System.out.print(first + " ");
+
+            int next = first + second;
+            first = second;
+            second = next;
+        }
+    }
+
 
     // ============================================================================
     // Question: Print Even and Odd Numbers Using Two Threads
@@ -1546,11 +1608,11 @@ public class ArrayCodingQuestionsCode {
         System.out.println("\n39. Highest Salary Employee By Department");
         System.out.println("    Output : " + highestSalaryByDept(emps));
 
-        System.out.println("\n40. Employee With Highest Salary");
-        System.out.println("    Output : " + highestSalary(emps).orElse(null));
-
-        System.out.println("\n41. Second Highest Salary Employee");
-        System.out.println("    Output : " + secondHighestSalary(emps).orElse(null));
+//        System.out.println("\n40. Employee With Highest Salary");
+//        System.out.println("    Output : " + highestSalary(emps).orElse(null));
+//
+//        System.out.println("\n41. Second Highest Salary Employee");
+//        System.out.println("    Output : " + secondHighestSalary(emps).orElse(null));
 
         System.out.println("\n42. Top 3 Highest Paid Employees");
         System.out.println("    Output : " + top3Employees(emps));

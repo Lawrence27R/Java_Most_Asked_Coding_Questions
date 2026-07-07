@@ -153,7 +153,7 @@ public class StringCodingQuestionsCode {
     // ============================================================================
     public static Set<Character> findDuplicates(String str) {
 
-        Set<Character> seen       = new HashSet<>();
+        Set<Character> set       = new HashSet<>();
         Set<Character> duplicates = new LinkedHashSet<>();
 
         if (str == null){
@@ -161,7 +161,7 @@ public class StringCodingQuestionsCode {
         }
 
         for (char ch : str.toCharArray()) {
-            if (!seen.add(ch)) {
+            if (!set.add(ch)) {
                 duplicates.add(ch);
             }
         }
