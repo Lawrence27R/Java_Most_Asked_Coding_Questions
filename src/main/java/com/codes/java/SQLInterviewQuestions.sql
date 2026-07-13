@@ -271,6 +271,22 @@ FROM Employee;
 SELECT REVERSE(emp_name)
 FROM Employee;
 
+DELETE FROM employee
+WHERE id NOT IN (
+    SELECT MIN(id)
+    FROM employee
+    GROUP BY name
+);
+
+DELETE FROM employee
+WHERE ctid NOT IN (
+    SELECT MIN(ctid)
+    FROM employee
+    GROUP BY id
+);
+
+ctid is PostgreSQL-specific
+
 -- Convert names to uppercase LOWER
 SELECT UPPER(emp_name)
 FROM Employee;

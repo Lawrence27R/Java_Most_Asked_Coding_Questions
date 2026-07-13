@@ -340,28 +340,30 @@ public class StringCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Longest Common Prefix
-    // Input : {"flower", "flow", "flight"}
+    // Question: Find the Longest Common Prefix
+    // Input : ["flower", "flow", "flight"]
     // Output: "fl"
-    // Time Complexity : O(n * m)
-    // Space Complexity: O(1)
     // ============================================================================
     public static String longestCommonPrefix(String[] strs) {
 
-        if (strs == null || strs.length == 0 || strs[0] == null){
+        if (strs == null || strs.length == 0) {
             return "";
         }
 
-        String prefix = strs[0];
+        String prefix = "";
 
-        for (int i = 1; i < strs.length; i++) {
+        for (int i = 0; i < strs[0].length(); i++) {
 
-            if (strs[i] == null) return "";
+            char ch = strs[0].charAt(i);
 
-            while (!strs[i].startsWith(prefix)) {
-                prefix = prefix.substring(0, prefix.length() - 1);
-                if (prefix.isEmpty()) return "";
+            for (int j = 1; j < strs.length; j++) {
+
+                if (i >= strs[j].length() || strs[j].charAt(i) != ch) {
+                    return prefix;
+                }
             }
+
+            prefix += ch;
         }
 
         return prefix;
@@ -617,32 +619,35 @@ public class StringCodingQuestionsCode {
     }
 
     // ============================================================================
-    // Question: Longest Substring Without Repeating Characters  (Sliding Window)
+    // Question: Longest Substring Without Repeating Characters
     // Input : "abcabcbb"
-    // Output: 3  ("abc")
-    // Time Complexity : O(n)
-    // Space Complexity: O(n)
+    // Output: "abc"
+    // Explanation: "abc" is the longest substring without repeating characters.
     // ============================================================================
-    public static int longestSubstringWithoutRepeating(String str) {
+    public static String longestSubstring(String s) {
 
-        if (str == null) return 0;
+        Set<Character> set = new HashSet<>();
 
-        Set<Character> set       = new HashSet<>();
-        int            left      = 0;
-        int            maxLength = 0;
+        int left = 0;
+        int maxLength = 0;
+        int start = 0;
 
-        for (int right = 0; right < str.length(); right++) {
+        for (int right = 0; right < s.length(); right++) {
 
-            while (set.contains(str.charAt(right))) {
-                set.remove(str.charAt(left));
+            while (set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left));
                 left++;
             }
 
-            set.add(str.charAt(right));
-            maxLength = Math.max(maxLength, right - left + 1);
+            set.add(s.charAt(right));
+
+            if (right - left + 1 > maxLength) {
+                maxLength = right - left + 1;
+                start = left;
+            }
         }
 
-        return maxLength;
+        return s.substring(start, start + maxLength);
     }
 
     // ============================================================================

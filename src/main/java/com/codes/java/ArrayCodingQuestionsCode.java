@@ -1012,6 +1012,100 @@ public class ArrayCodingQuestionsCode {
     }
 
     // ============================================================================
+    // Question: Split Array into Buckets of Fixed Size
+    // Input : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], Bucket Size = 3
+    // Output: [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
+    // ============================================================================
+//    List<int[]> buckets = splitArray(arr, bucketSize);
+//
+//    for (int[] bucket : buckets) {
+//        System.out.println(Arrays.toString(bucket));
+//    }
+    public static List<int[]> splitArray(int[] arr, int bucketSize) {
+        List<int[]> result = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i += bucketSize) {
+            result.add(Arrays.copyOfRange(
+                    arr,
+                    i,
+                    Math.min(i + bucketSize, arr.length)
+            ));
+        }
+
+        return result;
+    }
+
+    // ============================================================================
+    // Question: Check Whether a Palindrome Can Be Formed from a String
+    // Input : "aabb"
+    // Output: true
+    //
+    // Input : "aabbc"
+    // Output: true
+    //
+    // Input : "abc"
+    // Output: false
+    // ============================================================================
+    public static boolean canFormPalindrome(String str) {
+
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char ch : str.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+
+        int oddCount = 0;
+
+        for (int count : map.values()) {
+            if (count % 2 != 0) {
+                oddCount++;
+            }
+        }
+
+        return oddCount <= 1;
+    }
+
+    // ============================================================================
+    // Question: Minimum Size Subarray Sum
+    // Input : [2,3,1,2,4,3], Target = 7
+    // Output: 2
+    // Explanation: The subarray [4,3] has the minimum length (2)
+    // ============================================================================
+    public static int minSubArrayLen(int target, int[] nums) {
+
+        int left = 0;
+        int sum = 0;
+        int minLength = Integer.MAX_VALUE;
+
+        for (int right = 0; right < nums.length; right++) {
+
+            sum += nums[right];
+
+            while (sum >= target) {
+
+                minLength = Math.min(minLength, right - left + 1);
+
+                sum -= nums[left];
+                left++;
+            }
+        }
+
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
+    }
+
+    // ============================================================================
+    // Question: Find Kth Largest Element
+    // Input : [3,2,1,5,6,4], k = 2
+    // Output: 5
+    // ============================================================================
+    public static int findKthLargest(int[] nums, int k) {
+
+        Arrays.sort(nums);
+
+        return nums[nums.length - k];
+    }
+
+    // ============================================================================
     // Question: Factorial
     // Input : 5
     // Output: 120
