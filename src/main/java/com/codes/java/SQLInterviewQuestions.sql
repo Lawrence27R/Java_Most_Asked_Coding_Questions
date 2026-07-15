@@ -1,44 +1,8 @@
 
 -- =============================================================================
 -- SQLInterviewQuestions.sql
--- Most Asked SQL Interview Questions (Java Developers - 2 to 3 Years Experience)
+-- Most Asked SQL Interview Questions
 -- =============================================================================
-
--- ============================================================================
--- Sample Schema
--- ============================================================================
-
-CREATE TABLE Department(
-    dept_id INT PRIMARY KEY,
-    dept_name VARCHAR(50)
-);
-
-CREATE TABLE Employee(
-    emp_id INT PRIMARY KEY,
-    emp_name VARCHAR(100),
-    salary INT,
-    dept_id INT,
-    manager_id INT,
-    joining_date DATE
-);
-
--- Sample Data
-
-INSERT INTO Department VALUES
-(1,'IT'),
-(2,'HR'),
-(3,'Finance'),
-(4,'Sales');
-
-INSERT INTO Employee VALUES
-(101,'Alice',60000,1,NULL,'2022-01-10'),
-(102,'Bob',75000,1,101,'2021-04-15'),
-(103,'Charlie',50000,2,101,'2023-02-20'),
-(104,'David',90000,1,102,'2020-06-18'),
-(105,'Eva',75000,3,104,'2022-11-01'),
-(106,'Frank',45000,4,104,'2023-03-10'),
-(107,'Grace',90000,3,104,'2021-09-12'),
-(108,'Henry',55000,NULL,104,'2024-01-08');
 
 -- ============================================================================
 -- Question: Find Highest Salary
@@ -258,6 +222,10 @@ WHERE LENGTH(emp_name) > 5;
 -- Find first 3 characters
 SELECT SUBSTRING(emp_name,1,3)
 FROM Employee;
+--SUBSTRING(string, start_position, length) length of substring to return
+--Extract the domain from an email
+SELECT SUBSTRING(email, LOCATE('@', email) + 1)
+FROM Users;
 
 -- Last 3 characters
 SELECT RIGHT(emp_name,3)
@@ -310,26 +278,50 @@ WHERE SUBSTRING(emp_name,3,1)='r';
 --   GROUP BY emp_name, salary, dept_id
 -- );
 
--- ============================================================================
--- Practice Topics
--- ============================================================================
--- 1. INNER JOIN
--- 2. LEFT JOIN
--- 3. RIGHT JOIN
--- 4. FULL OUTER JOIN
--- 5. SELF JOIN
--- 6. GROUP BY
--- 7. HAVING
--- 8. Subqueries
--- 9. EXISTS / NOT EXISTS
--- 10. ROW_NUMBER
--- 11. RANK
--- 12. DENSE_RANK
--- 13. LEAD / LAG
--- 14. CASE
--- 15. CTE (WITH)
--- 16. Window Functions
--- 17. Aggregate Functions
--- 18. Date Functions
--- 19. String Functions
--- 20. Common Interview Salary Problems
+| Join                              | One-sentence explanation                                                                                                 |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **INNER JOIN**                    | Returns only the rows that have matching values in both tables.                                                          |
+| **LEFT JOIN (LEFT OUTER JOIN)**   | Returns all rows from the left table and the matching rows from the right table; unmatched right-side values are `NULL`. |
+| **RIGHT JOIN (RIGHT OUTER JOIN)** | Returns all rows from the right table and the matching rows from the left table; unmatched left-side values are `NULL`.  |
+| **FULL JOIN (FULL OUTER JOIN)**   | Returns all rows from both tables, matching where possible and filling unmatched columns with `NULL`.                    |
+| **CROSS JOIN**                    | Returns every possible combination of rows from both tables (Cartesian product).                                         |
+| **SELF JOIN**                     | Joins a table with itself to compare or relate rows within the same table.                                               |
+
+What is an Index?
+An Index is a database object that improves the speed of data retrieval operations (SELECT) by creating a fast lookup structure.
+Without Index
+Suppose Employee table has 10 lakh records.
+This is called a Full Table Scan.
+Faster Searches
+Faster Sorting
+Most databases use a B-Tree (Balanced Tree) structure.
+O(log n)
+CREATE INDEX idx_employee_name
+ON Employee(name);
+
+What is Clustered Index?
+A Clustered Index determines the physical order of data in the table.(stored on disk)
+A clustered index physically sorts and stores the table's data according to the indexed column(s).
+If no clustered index exists, the table is stored as a heap (no guaranteed physical order).
+Only ONE Clustered Index per table
+Because data can be physically sorted only one way.
+Most databases automatically create a Clustered Index on the Primary Key.
+
+PostgreSQL does not have true clustered indexes like SQL Server.
+Instead, PostgreSQL has a CLUSTER command that reorders the table once based on an existing index.
+
+What is Non-Clustered Index?
+A non-clustered index is a separate structure that stores the indexed values and pointers to the corresponding table rows.
+It speeds up searches without changing the physical order of the data.
+Unlike a clustered index, a table can have multiple non-clustered indexes.
+PostgreSQL indexes are non-clustered by default.
+
+CREATE INDEX idx_name
+ON Employee(name);
+The table stays physically the same:
+Follows the pointer to the actual row in the table.
+
+What is Composite Index?
+An index created on multiple columns.
+CREATE INDEX idx_emp_dept
+ON Employee(name, dept_id);
