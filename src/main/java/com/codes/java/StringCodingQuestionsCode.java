@@ -657,10 +657,12 @@ public class StringCodingQuestionsCode {
     // (Every opening bracket must have a matching closing bracket in correct order)
     // Time Complexity : O(n)
     // Space Complexity: O(n)
+//    LIFO Last In First Out
     // ============================================================================
     public static boolean isBalancedParentheses(String str) {
 
-        if (str == null) return false;
+        if (str == null)
+            return false;
 
         Deque<Character> stack = new ArrayDeque<>();
 
@@ -671,6 +673,7 @@ public class StringCodingQuestionsCode {
 
             } else if (ch == ')' || ch == '}' || ch == ']') {
 
+//                str = ")"; for this test case
                 if (stack.isEmpty())
                     return false;
 
@@ -860,7 +863,7 @@ public class StringCodingQuestionsCode {
         // ------------------------------------------------------------------
         System.out.println("\n28. Longest Substring Without Repeating Characters");
         System.out.println("    Input  : \"abcabcbb\"");
-        System.out.println("    Output : " + longestSubstringWithoutRepeating("abcabcbb"));
+//        System.out.println("    Output : " + longestSubstringWithoutRepeating("abcabcbb"));
         System.out.println("    (Longest unique window = \"abc\" = length 3)");
 
         // ------------------------------------------------------------------

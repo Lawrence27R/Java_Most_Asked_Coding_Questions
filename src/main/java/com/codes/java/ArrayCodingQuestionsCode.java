@@ -391,6 +391,7 @@ public class ArrayCodingQuestionsCode {
     // Time Complexity : O(n)
     // Space Complexity: O(1)
     // ============================================================================
+//    For left all condtion will be -- nonZeroPos = nums.length - 1 for loop starts nums.length-1, i>= 0, i--
     public static void moveZerosToEnd(int[] nums) {
 
         if (nums == null || nums.length <= 1)
