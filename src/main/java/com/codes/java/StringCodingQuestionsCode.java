@@ -358,6 +358,7 @@ public class StringCodingQuestionsCode {
 
             for (int j = 1; j < strs.length; j++) {
 
+//                if rest other words length is less than first for prefix or char is not equal to first word prefix
                 if (i >= strs[j].length() || strs[j].charAt(i) != ch) {
                     return prefix;
                 }
